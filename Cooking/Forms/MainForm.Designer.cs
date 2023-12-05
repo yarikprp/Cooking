@@ -57,6 +57,7 @@
             Column4 = new DataGridViewTextBoxColumn();
             Column5 = new DataGridViewTextBoxColumn();
             listBox1 = new ListBox();
+            пользователиToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -64,7 +65,7 @@
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { блюдаToolStripMenuItem, продуктToolStripMenuItem, рецептToolStripMenuItem, петровВасилийПетровичToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { блюдаToolStripMenuItem, продуктToolStripMenuItem, рецептToolStripMenuItem, петровВасилийПетровичToolStripMenuItem, пользователиToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(1038, 28);
@@ -287,6 +288,14 @@
             listBox1.TabIndex = 9;
             listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
             // 
+            // пользователиToolStripMenuItem
+            // 
+            пользователиToolStripMenuItem.Image = Properties.Resources.profil;
+            пользователиToolStripMenuItem.Name = "пользователиToolStripMenuItem";
+            пользователиToolStripMenuItem.Size = new Size(142, 24);
+            пользователиToolStripMenuItem.Text = "Пользователи";
+            пользователиToolStripMenuItem.Click += пользователиToolStripMenuItem_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -345,5 +354,6 @@
         private ToolStripMenuItem сменитьПользователяToolStripMenuItem;
         private ToolStripMenuItem сменитьПаToolStripMenuItem;
         private ToolStripMenuItem выходToolStripMenuItem;
+        private ToolStripMenuItem пользователиToolStripMenuItem;
     }
 }

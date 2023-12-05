@@ -87,6 +87,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(317, 34);
             textBox1.TabIndex = 4;
+            textBox1.Text = "AP";
             // 
             // textBox2
             // 
@@ -96,6 +97,7 @@
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(317, 34);
             textBox2.TabIndex = 5;
+            textBox2.Text = "Ap12345@";
             // 
             // enter
             // 

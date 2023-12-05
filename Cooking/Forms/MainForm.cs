@@ -42,9 +42,11 @@ namespace Cooking
                 case 2:
                     äîáàâèòüÁëşäîToolStripMenuItem.Visible = false;
                     óäàëèòüÁëşäîToolStripMenuItem.Visible = false;
+                    ïîëüçîâàòåëèToolStripMenuItem.Visible = false;
                     break;
                 case 3:
                     äîáàâèòüToolStripMenuItem.Visible = false;
+                    ïîëüçîâàòåëèToolStripMenuItem.Visible = false;
                     break;
             }
             ïåòğîâÂàñèëèéÏåòğîâè÷ToolStripMenuItem.Text = AuthorizationForm.currentUser.first_name + " " + AuthorizationForm.currentUser.last_name;
@@ -111,6 +113,12 @@ namespace Cooking
             AuthorizationForm authorizationForm = new AuthorizationForm();
             authorizationForm.Show();
             this.Hide();
+        }
+
+        private void ïîëüçîâàòåëèToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Users users = new Users();
+            users.Show();
         }
     }
 }

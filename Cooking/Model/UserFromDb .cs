@@ -208,5 +208,79 @@ namespace Cooking.Model
             }
             connect.Close();
         }
+        public List<Classes.User> UsersLoad()
+        {
+            List<Classes.User> users = new List<Classes.User>();
+            NpgsqlConnection connection = new NpgsqlConnection(Connection.connectionStr);
+            try
+            {
+                connection.Open();
+                string sqlExp = "SELECT * FROM public.users ";
+                NpgsqlCommand command = new NpgsqlCommand(sqlExp, connection);
+                NpgsqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                    DateTime date_of_birthday = DateTime.Now;
+                    if (!(reader[4] is DBNull))
+                    {
+                        date_of_birthday = Convert.ToDateTime(reader[4]);
+                    }
+                    users.Add(new Classes.User((int)reader[0], reader[1].ToString(), reader[2].ToString(), reader[3].ToString(), date_of_birthday, reader[5].ToString(), reader[6].ToString(), reader[7].ToString(), reader[8].ToString(), (int)reader[9]));
+                    }
+                    reader.Close();
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            connection.Close();
+            return users;
+        }
+        public void DeleteUSer(Classes.User user)
+        {
+            NpgsqlConnection connection = new NpgsqlConnection(Connection.connectionStr);
+            try
+            {
+                connection.Open();
+                string sqlQuery = "DELETE FROM public.users WHERE user_id = @user_id;";
+
+                NpgsqlCommand command = new NpgsqlCommand(sqlQuery, connection);
+                command.Parameters.AddWithValue("user_id", user.user_id);
+
+                int i = command.ExecuteNonQuery();
+                if (i == 1) { MessageBox.Show("Пациент удален!"); }
+            }
+            catch (NpgsqlException ex) { MessageBox.Show(ex.Message); }
+            connection.Close();
+        }
+        public void СhangeRole(Classes.User users, int role_id)
+        {
+            NpgsqlConnection connect = new NpgsqlConnection(Connection.connectionStr);
+            try
+            {
+                {
+                    connect.Open();
+                    string sqlExp = "UPDATE public.users SET role_id = @role_id WHERE user_id = @user_id ";
+                    NpgsqlCommand cmd1 = new NpgsqlCommand(sqlExp, connect);
+                    cmd1.Parameters.AddWithValue("role_id", role_id);
+                    cmd1.Parameters.AddWithValue("user_id", users.user_id);
+
+                    int i = cmd1.ExecuteNonQuery();
+                    if (i == 1)
+                    {
+                        MessageBox.Show("Данные обновлены");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ошибка записи");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message); return;
+            }
+            connect.Close();
+        }
     }
 }
