@@ -36,7 +36,7 @@ namespace Cooking.Forms
             {
                 try
                 {
-                    if(Verification.VerifySHA512Hash(textBox1.Text, AuthorizationForm.currentUser.password))
+                    if(Verification.VerifySHA512Hash(textBox1.Text, AuthorizationForm.currentUser.Password))
                     { userFromDb.EditPassword(textBox2.Text); }
                     else { MessageBox.Show("Старый пароль неверный"); return; }
                 }

@@ -35,6 +35,7 @@
             добавитьБлюдоToolStripMenuItem = new ToolStripMenuItem();
             удалитьБлюдоToolStripMenuItem = new ToolStripMenuItem();
             продуктToolStripMenuItem = new ToolStripMenuItem();
+            просмотрПродуктоToolStripMenuItem = new ToolStripMenuItem();
             добавитьToolStripMenuItem = new ToolStripMenuItem();
             рецептToolStripMenuItem = new ToolStripMenuItem();
             петровВасилийПетровичToolStripMenuItem = new ToolStripMenuItem();
@@ -42,6 +43,7 @@
             сменитьПаToolStripMenuItem = new ToolStripMenuItem();
             сменитьПользователяToolStripMenuItem = new ToolStripMenuItem();
             выходToolStripMenuItem = new ToolStripMenuItem();
+            пользователиToolStripMenuItem = new ToolStripMenuItem();
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -57,7 +59,6 @@
             Column4 = new DataGridViewTextBoxColumn();
             Column5 = new DataGridViewTextBoxColumn();
             listBox1 = new ListBox();
-            пользователиToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -83,34 +84,44 @@
             // просмотрБлюдToolStripMenuItem
             // 
             просмотрБлюдToolStripMenuItem.Name = "просмотрБлюдToolStripMenuItem";
-            просмотрБлюдToolStripMenuItem.Size = new Size(209, 26);
+            просмотрБлюдToolStripMenuItem.Size = new Size(224, 26);
             просмотрБлюдToolStripMenuItem.Text = "Просмотр блюд";
             // 
             // добавитьБлюдоToolStripMenuItem
             // 
             добавитьБлюдоToolStripMenuItem.Name = "добавитьБлюдоToolStripMenuItem";
-            добавитьБлюдоToolStripMenuItem.Size = new Size(209, 26);
+            добавитьБлюдоToolStripMenuItem.Size = new Size(224, 26);
             добавитьБлюдоToolStripMenuItem.Text = "Добавить блюдо";
             // 
             // удалитьБлюдоToolStripMenuItem
             // 
             удалитьБлюдоToolStripMenuItem.Name = "удалитьБлюдоToolStripMenuItem";
-            удалитьБлюдоToolStripMenuItem.Size = new Size(209, 26);
+            удалитьБлюдоToolStripMenuItem.Size = new Size(224, 26);
             удалитьБлюдоToolStripMenuItem.Text = "Удалить блюдо";
+            удалитьБлюдоToolStripMenuItem.Click += удалитьБлюдоToolStripMenuItem_Click;
             // 
             // продуктToolStripMenuItem
             // 
-            продуктToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { добавитьToolStripMenuItem });
+            продуктToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { просмотрПродуктоToolStripMenuItem, добавитьToolStripMenuItem });
             продуктToolStripMenuItem.Image = Properties.Resources.diet;
             продуктToolStripMenuItem.Name = "продуктToolStripMenuItem";
-            продуктToolStripMenuItem.Size = new Size(100, 24);
-            продуктToolStripMenuItem.Text = "Продукт";
+            продуктToolStripMenuItem.Size = new Size(111, 24);
+            продуктToolStripMenuItem.Text = "Продукты";
+            продуктToolStripMenuItem.Click += продуктToolStripMenuItem_Click;
+            // 
+            // просмотрПродуктоToolStripMenuItem
+            // 
+            просмотрПродуктоToolStripMenuItem.Name = "просмотрПродуктоToolStripMenuItem";
+            просмотрПродуктоToolStripMenuItem.Size = new Size(239, 26);
+            просмотрПродуктоToolStripMenuItem.Text = "Просмотр продуктов";
+            просмотрПродуктоToolStripMenuItem.Click += просмотрПродуктоToolStripMenuItem_Click;
             // 
             // добавитьToolStripMenuItem
             // 
             добавитьToolStripMenuItem.Name = "добавитьToolStripMenuItem";
-            добавитьToolStripMenuItem.Size = new Size(159, 26);
+            добавитьToolStripMenuItem.Size = new Size(239, 26);
             добавитьToolStripMenuItem.Text = "Добавить";
+            добавитьToolStripMenuItem.Click += добавитьToolStripMenuItem_Click;
             // 
             // рецептToolStripMenuItem
             // 
@@ -157,6 +168,14 @@
             выходToolStripMenuItem.Text = "Выход";
             выходToolStripMenuItem.Click += выходToolStripMenuItem_Click;
             // 
+            // пользователиToolStripMenuItem
+            // 
+            пользователиToolStripMenuItem.Image = Properties.Resources.profil;
+            пользователиToolStripMenuItem.Name = "пользователиToolStripMenuItem";
+            пользователиToolStripMenuItem.Size = new Size(142, 24);
+            пользователиToolStripMenuItem.Text = "Пользователи";
+            пользователиToolStripMenuItem.Click += пользователиToolStripMenuItem_Click;
+            // 
             // label1
             // 
             label1.AutoSize = true;
@@ -198,7 +217,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(929, 180);
+            label5.Location = new Point(908, 180);
             label5.Name = "label5";
             label5.Size = new Size(75, 20);
             label5.TabIndex = 5;
@@ -231,6 +250,7 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(676, 368);
             dataGridView1.TabIndex = 8;
+            dataGridView1.DoubleClick += dataGridView1_DoubleClick;
             // 
             // Column0
             // 
@@ -287,14 +307,6 @@
             listBox1.Size = new Size(219, 204);
             listBox1.TabIndex = 9;
             listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
-            // 
-            // пользователиToolStripMenuItem
-            // 
-            пользователиToolStripMenuItem.Image = Properties.Resources.profil;
-            пользователиToolStripMenuItem.Name = "пользователиToolStripMenuItem";
-            пользователиToolStripMenuItem.Size = new Size(142, 24);
-            пользователиToolStripMenuItem.Text = "Пользователи";
-            пользователиToolStripMenuItem.Click += пользователиToolStripMenuItem_Click;
             // 
             // MainForm
             // 
@@ -355,5 +367,6 @@
         private ToolStripMenuItem сменитьПаToolStripMenuItem;
         private ToolStripMenuItem выходToolStripMenuItem;
         private ToolStripMenuItem пользователиToolStripMenuItem;
+        private ToolStripMenuItem просмотрПродуктоToolStripMenuItem;
     }
 }

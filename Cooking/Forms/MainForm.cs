@@ -7,10 +7,13 @@ namespace Cooking
     public partial class MainForm : Form
     {
         public List<Bludo> bludos = new List<Bludo>();
+        public List<SostavBluda> sostavBlud = new List<SostavBluda>();
         BludaFromDB bludaFromDB = new BludaFromDB();
 
         public static List<Categoriya> categoriya = new List<Categoriya>();
         CategoriyaFromDB categoriyaFromDB = new CategoriyaFromDB();
+
+        private int selectedRowIndex;
         public MainForm()
         {
             InitializeComponent();
@@ -37,8 +40,10 @@ namespace Cooking
             comboBox1.DataSource = categoriya;
             comboBox1.DisplayMember = "CategoryName";
             comboBox1.ValueMember = "Id";
-            switch (AuthorizationForm.currentUser.role_id)
+            switch (AuthorizationForm.currentUser.Role_id)
             {
+                case 1:
+                    break;
                 case 2:
                     äîáàâèòüÁëşäîToolStripMenuItem.Visible = false;
                     óäàëèòüÁëşäîToolStripMenuItem.Visible = false;
@@ -49,13 +54,23 @@ namespace Cooking
                     ïîëüçîâàòåëèToolStripMenuItem.Visible = false;
                     break;
             }
-            ïåòğîâÂàñèëèéÏåòğîâè÷ToolStripMenuItem.Text = AuthorizationForm.currentUser.first_name + " " + AuthorizationForm.currentUser.last_name;
+            ïåòğîâÂàñèëèéÏåòğîâè÷ToolStripMenuItem.Text = AuthorizationForm.currentUser.First_name + " " + AuthorizationForm.currentUser.Last_name;
+        }
+        public List<Bludo> SearchBludos(string textBox1)
+        {
+            List<Bludo> products = new List<Bludo>();
+            foreach (Bludo item in bludos)
+            {
+                if (item.BludoName.StartsWith(textBox1) || item.Osnova.StartsWith(textBox1))
+                {
+                    products.Add(item);
+                }
+            }
+            return products;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
-            BludaFromDB bludaFromDB = new BludaFromDB();
             dataGridView1.DataSource = bludaFromDB.SearchBludos(textBox1.Text);
         }
 
@@ -99,7 +114,7 @@ namespace Cooking
             DialogResult result = profileEdit.ShowDialog();
             if (result == DialogResult.OK)
             {
-                ïåòğîâÂàñèëèéÏåòğîâè÷ToolStripMenuItem.Text = AuthorizationForm.currentUser.first_name + " " + AuthorizationForm.currentUser.last_name;
+                ïåòğîâÂàñèëèéÏåòğîâè÷ToolStripMenuItem.Text = AuthorizationForm.currentUser.First_name + " " + AuthorizationForm.currentUser.Last_name;
             }
         }
 
@@ -119,6 +134,49 @@ namespace Cooking
         {
             Users users = new Users();
             users.Show();
+        }
+        private void ïğîäóêòToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void ïğîñìîòğÏğîäóêòîToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ProductForm productsForm = new ProductForm();
+            productsForm.Show();
+        }
+
+        private void äîáàâèòüToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ProductsFormAdd productsFormAdd = new ProductsFormAdd();
+            productsFormAdd.Show();
+        }
+        void PrintSostavBluda(List<SostavBluda> sostavBludas, string BludoName)
+        {
+            ClearSostavBluda();
+
+            label5.Text = BludoName;
+
+            foreach (SostavBluda item in sostavBludas)
+            {
+                listBox1.Items.Add(item.ProductName + ", " + item.Weight);
+            }
+        }
+        void ClearSostavBluda()
+        {
+            listBox1.Items.Clear();
+            label5.Text = "";
+        }
+
+        private void dataGridView1_DoubleClick(object sender, EventArgs e)
+        {
+            selectedRowIndex = dataGridView1.CurrentRow.Index;
+            sostavBlud = bludaFromDB.SostavBludFromDB(bludos[selectedRowIndex].Id);
+            PrintSostavBluda(sostavBlud, bludos[selectedRowIndex].BludoName);
+        }
+
+        private void óäàëèòüÁëşäîToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

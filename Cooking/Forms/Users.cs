@@ -66,13 +66,13 @@ namespace Cooking.Forms
         }
         void DispalyUsers(int i)
         {
-            textBox1.Text = users[i].first_name;
-            textBox2.Text = users[i].last_name;
-            textBox3.Text = users[i].patronymic;
-            dateTimePicker1.Value = users[i].date_of_birthday;
-            textBox4.Text = users[i].phone;
-            textBox5.Text = users[i].adress;
-            comboBox1.SelectedIndex = users[i].role_id - 1;
+            textBox1.Text = users[i].First_name;
+            textBox2.Text = users[i].Last_name;
+            textBox3.Text = users[i].Patronymic;
+            dateTimePicker1.Value = users[i].Date_of_birthday;
+            textBox4.Text = users[i].Phone;
+            textBox5.Text = users[i].Adress;
+            comboBox1.SelectedIndex = users[i].Role_id - 1;
         }
         private void button_add_Click(object sender, EventArgs e)
         {
@@ -89,7 +89,7 @@ namespace Cooking.Forms
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 User removeUser = GetSelectedUser();
-                string warrnigText = "Вы действительно хотите удалить пользователя " + removeUser.first_name + " " + removeUser.last_name + " ?";
+                string warrnigText = "Вы действительно хотите удалить пользователя " + removeUser.First_name + " " + removeUser.Last_name + " ?";
                 DialogResult result = MessageBox.Show(warrnigText, "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
 
                 if (result == DialogResult.OK)
@@ -103,19 +103,24 @@ namespace Cooking.Forms
         }
         private void dataGridView1_DoubleClick(object sender, EventArgs e)
         {
-            if(dataGridView1.SelectedRows.Count > 0)
-            { 
-            selectedRowIndex = dataGridView1.SelectedRows[0].Index;
-            DispalyUsers(selectedRowIndex);
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                selectedRowIndex = dataGridView1.SelectedRows[0].Index;
+                DispalyUsers(selectedRowIndex);
             }
             AllUsers();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            userFromDb.СhangeRole(users[selectedRowIndex], comboBox1.SelectedIndex + 1); 
+            userFromDb.СhangeRole(users[selectedRowIndex], comboBox1.SelectedIndex + 1);
             AllUsers();
             dataGridView1.DataSource = users;
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

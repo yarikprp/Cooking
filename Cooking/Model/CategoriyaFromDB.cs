@@ -19,7 +19,7 @@ namespace Cooking.Model
             try
             {
                 connection.Open();
-                string sqlExp = "SELECT category_id, category_name FROM public.category_bluda ";
+                string sqlExp = "SELECT category_id, category_name FROM public.category_bluda ORDER BY category_id";
                 NpgsqlCommand command = new NpgsqlCommand(sqlExp, connection);
                 NpgsqlDataReader reader = command.ExecuteReader();
                 if (reader.HasRows)

@@ -155,13 +155,13 @@ namespace Cooking.Model
                 string sqlExp = "UPDATE public.users SET first_name=@first_name, last_name=@last_name, patronymic=@patronymic, date_of_birthday=@date_of_birthday, phone=@phone, adress=@adress WHERE user_id=@user_id ";
                 NpgsqlCommand cmd1 = new NpgsqlCommand( sqlExp, connect);
 
-                cmd1.Parameters.AddWithValue("first_name", user.first_name);
-                cmd1.Parameters.AddWithValue("last_name", user.last_name);
-                cmd1.Parameters.AddWithValue("patronymic", user.patronymic);
-                cmd1.Parameters.AddWithValue("date_of_birthday", user.date_of_birthday);
-                cmd1.Parameters.AddWithValue("phone", user.phone);
-                cmd1.Parameters.AddWithValue("adress", user.adress);
-                cmd1.Parameters.AddWithValue("user_id", user.user_id);
+                cmd1.Parameters.AddWithValue("first_name", user.First_name);
+                cmd1.Parameters.AddWithValue("last_name", user.Last_name);
+                cmd1.Parameters.AddWithValue("patronymic", user.Patronymic);
+                cmd1.Parameters.AddWithValue("date_of_birthday", user.Date_of_birthday);
+                cmd1.Parameters.AddWithValue("phone", user.Phone);
+                cmd1.Parameters.AddWithValue("adress", user.Adress);
+                cmd1.Parameters.AddWithValue("user_id", user.User_id);
 
                 int i = cmd1.ExecuteNonQuery();
                 if(i == 1)
@@ -189,7 +189,7 @@ namespace Cooking.Model
                     string sqlExp = "UPDATE public.users SET password=@password WHERE user_id=@user_id ";
                     NpgsqlCommand cmd1 = new NpgsqlCommand(sqlExp, connect);
                     cmd1.Parameters.AddWithValue("@password", Verification.GetSHA512Hash(password));
-                    cmd1.Parameters.AddWithValue("user_id", AuthorizationForm.currentUser.user_id);
+                    cmd1.Parameters.AddWithValue("user_id", AuthorizationForm.currentUser.User_id);
 
                     int i = cmd1.ExecuteNonQuery();
                     if (i == 1)
@@ -245,7 +245,7 @@ namespace Cooking.Model
                 string sqlQuery = "DELETE FROM public.users WHERE user_id = @user_id;";
 
                 NpgsqlCommand command = new NpgsqlCommand(sqlQuery, connection);
-                command.Parameters.AddWithValue("user_id", user.user_id);
+                command.Parameters.AddWithValue("user_id", user.User_id);
 
                 int i = command.ExecuteNonQuery();
                 if (i == 1) { MessageBox.Show("Пациент удален!"); }
@@ -263,7 +263,7 @@ namespace Cooking.Model
                     string sqlExp = "UPDATE public.users SET role_id = @role_id WHERE user_id = @user_id ";
                     NpgsqlCommand cmd1 = new NpgsqlCommand(sqlExp, connect);
                     cmd1.Parameters.AddWithValue("role_id", role_id);
-                    cmd1.Parameters.AddWithValue("user_id", users.user_id);
+                    cmd1.Parameters.AddWithValue("user_id", users.User_id);
 
                     int i = cmd1.ExecuteNonQuery();
                     if (i == 1)
