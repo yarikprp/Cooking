@@ -59,6 +59,7 @@
             Column4 = new DataGridViewTextBoxColumn();
             Column5 = new DataGridViewTextBoxColumn();
             listBox1 = new ListBox();
+            поискПоКритериямToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -75,7 +76,7 @@
             // 
             // блюдаToolStripMenuItem
             // 
-            блюдаToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { просмотрБлюдToolStripMenuItem, добавитьБлюдоToolStripMenuItem, удалитьБлюдоToolStripMenuItem });
+            блюдаToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { просмотрБлюдToolStripMenuItem, добавитьБлюдоToolStripMenuItem, удалитьБлюдоToolStripMenuItem, поискПоКритериямToolStripMenuItem });
             блюдаToolStripMenuItem.Image = Properties.Resources.dish;
             блюдаToolStripMenuItem.Name = "блюдаToolStripMenuItem";
             блюдаToolStripMenuItem.Size = new Size(88, 24);
@@ -84,19 +85,20 @@
             // просмотрБлюдToolStripMenuItem
             // 
             просмотрБлюдToolStripMenuItem.Name = "просмотрБлюдToolStripMenuItem";
-            просмотрБлюдToolStripMenuItem.Size = new Size(224, 26);
+            просмотрБлюдToolStripMenuItem.Size = new Size(237, 26);
             просмотрБлюдToolStripMenuItem.Text = "Просмотр блюд";
             // 
             // добавитьБлюдоToolStripMenuItem
             // 
             добавитьБлюдоToolStripMenuItem.Name = "добавитьБлюдоToolStripMenuItem";
-            добавитьБлюдоToolStripMenuItem.Size = new Size(224, 26);
+            добавитьБлюдоToolStripMenuItem.Size = new Size(237, 26);
             добавитьБлюдоToolStripMenuItem.Text = "Добавить блюдо";
+            добавитьБлюдоToolStripMenuItem.Click += добавитьБлюдоToolStripMenuItem_Click;
             // 
             // удалитьБлюдоToolStripMenuItem
             // 
             удалитьБлюдоToolStripMenuItem.Name = "удалитьБлюдоToolStripMenuItem";
-            удалитьБлюдоToolStripMenuItem.Size = new Size(224, 26);
+            удалитьБлюдоToolStripMenuItem.Size = new Size(237, 26);
             удалитьБлюдоToolStripMenuItem.Text = "Удалить блюдо";
             удалитьБлюдоToolStripMenuItem.Click += удалитьБлюдоToolStripMenuItem_Click;
             // 
@@ -129,6 +131,7 @@
             рецептToolStripMenuItem.Name = "рецептToolStripMenuItem";
             рецептToolStripMenuItem.Size = new Size(91, 24);
             рецептToolStripMenuItem.Text = "Рецепт";
+            рецептToolStripMenuItem.Click += рецептToolStripMenuItem_Click;
             // 
             // петровВасилийПетровичToolStripMenuItem
             // 
@@ -250,6 +253,7 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(676, 368);
             dataGridView1.TabIndex = 8;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             dataGridView1.DoubleClick += dataGridView1_DoubleClick;
             // 
             // Column0
@@ -307,6 +311,13 @@
             listBox1.Size = new Size(219, 204);
             listBox1.TabIndex = 9;
             listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
+            // 
+            // поискПоКритериямToolStripMenuItem
+            // 
+            поискПоКритериямToolStripMenuItem.Name = "поискПоКритериямToolStripMenuItem";
+            поискПоКритериямToolStripMenuItem.Size = new Size(237, 26);
+            поискПоКритериямToolStripMenuItem.Text = "Поиск по критериям";
+            поискПоКритериямToolStripMenuItem.Click += поискПоКритериямToolStripMenuItem_Click;
             // 
             // MainForm
             // 
@@ -368,5 +379,6 @@
         private ToolStripMenuItem выходToolStripMenuItem;
         private ToolStripMenuItem пользователиToolStripMenuItem;
         private ToolStripMenuItem просмотрПродуктоToolStripMenuItem;
+        private ToolStripMenuItem поискПоКритериямToolStripMenuItem;
     }
 }

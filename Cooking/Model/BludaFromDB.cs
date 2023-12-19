@@ -2,6 +2,8 @@
 using Cooking.Model;
 using Microsoft.Win32.SafeHandles;
 using Npgsql;
+using System.Data.Common;
+using System.Text;
 
 public class BludaFromDB
 {
@@ -9,7 +11,7 @@ public class BludaFromDB
 
     public List<Bludo> LoadBludos()
     {
-        bludos = new List<Bludo>(); 
+        bludos = new List<Bludo>();
 
         NpgsqlConnection connection = new NpgsqlConnection(Connection.connectionStr);
         try
@@ -72,13 +74,13 @@ public class BludaFromDB
     public List<Bludo> SearchBludos(string textBox1)
     {
         List<Bludo> bludoSearch = new List<Bludo>();
-            foreach (Bludo item in bludos)
+        foreach (Bludo item in bludos)
+        {
+            if (item.BludoName.StartsWith(textBox1) || item.Osnova.StartsWith(textBox1))
             {
-                if (item.BludoName.StartsWith(textBox1) || item.Osnova.StartsWith(textBox1))
-                {
-                    bludoSearch.Add(item);
-                }
+                bludoSearch.Add(item);
             }
+        }
         return bludoSearch;
     }
     public List<SostavBluda> SostavBludFromDB(int idBluda)
@@ -95,9 +97,9 @@ public class BludaFromDB
             NpgsqlCommand command = new NpgsqlCommand(sqlExp, connection);
             command.Parameters.AddWithValue("@idBluda", idBluda);
             NpgsqlDataReader reader = command.ExecuteReader();
-            if (reader.HasRows) 
-            { 
-                while(reader.Read())
+            if (reader.HasRows)
+            {
+                while (reader.Read())
                 {
                     sostavBlud.Add(new SostavBluda(idBluda, reader.GetString(0), (int)reader.GetDouble(1)));
                 }
@@ -113,4 +115,58 @@ public class BludaFromDB
         finally
         { connection.Close(); }
     }
+    public void DeleteBludo(Bludo bludo)
+    {
+        NpgsqlConnection connection = new NpgsqlConnection(Connection.connectionStr);
+        try
+        {
+            connection.Open();
+            string sqlQuery = "DELETE FROM public.bluda WHERE bludo_id = @bludo_id;";
+
+            NpgsqlCommand command = new NpgsqlCommand(sqlQuery, connection);
+            command.Parameters.AddWithValue("bludo_id", bludo.Id);
+
+            int i = command.ExecuteNonQuery();
+            if (i == 1) { MessageBox.Show("Блюдо удалено!"); }
+        }
+        catch (NpgsqlException ex) { MessageBox.Show(ex.Message); }
+        connection.Close();
+    }
+    public void AddNewBludo(Bludo newBludo, List<SostavBluda> sostavBludas, int idCategoriya, string picPath)
+    {
+        NpgsqlConnection connection = new NpgsqlConnection(Connection.connectionStr);
+        connection.Open();
+        NpgsqlTransaction transaction = connection.BeginTransaction();
+        NpgsqlCommand cmd = connection.CreateCommand();
+        cmd.Transaction = transaction;
+
+        try
+        {
+            cmd.CommandText = "INSERT INTO public.bluda(bludo_name, category_id, osnova, vihod, bludo_image) " +
+               "VALUES (@bludo_name, @categoriya, @osnova, @vihod, @bludo_image) ";
+            cmd.Parameters.AddWithValue("bludo_name", newBludo.BludoName);
+            cmd.Parameters.AddWithValue("categoriya", idCategoriya);
+            cmd.Parameters.AddWithValue("osnova", newBludo.Osnova);
+            cmd.Parameters.AddWithValue("vihod", newBludo.Vyhod);
+            cmd.Parameters.AddWithValue("bludo_image", picPath);
+            cmd.ExecuteNonQuery();
+            cmd.CommandText = "SELECT MAX(bludo_id) FROM public.bluda ";
+
+            int idBluda = Convert.ToInt32(cmd.ExecuteScalar());
+            MessageBox.Show(idBluda.ToString());
+
+            for(int i = 0; i < sostavBludas.Count; i++) 
+            {
+                cmd.CommandText = $"INSERT INTO public.sostav_blud(bludo_id, products_id, ves_bluda) " +
+                    $" VALUES ({idBluda}, (SELECT public.products.products_id FROM public.products WHERE products_name = '{sostavBludas[i].ProductName}'), "
+                    + $"{sostavBludas[i].Weight})";
+                cmd.ExecuteNonQuery();
+            }
+            MessageBox.Show($"Блюдо добавлено");
+            transaction.Commit();
+        }
+        catch(NpgsqlException ex) { MessageBox.Show(ex.Message); transaction.Rollback(); }
+    }
+    
+
 }

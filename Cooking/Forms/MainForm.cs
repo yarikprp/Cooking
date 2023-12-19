@@ -173,10 +173,53 @@ namespace Cooking
             sostavBlud = bludaFromDB.SostavBludFromDB(bludos[selectedRowIndex].Id);
             PrintSostavBluda(sostavBlud, bludos[selectedRowIndex].BludoName);
         }
+        private Bludo GetSelectedBludo()
+        {
+            return (Bludo)dataGridView1.SelectedRows[0].DataBoundItem;
+        }
 
         private void удалитьБлюдоToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                Bludo removeBludo = GetSelectedBludo();
+                string warrnigText = "Вы действительно хотите удалить блюдо: " + removeBludo.BludoName + " ?";
+                DialogResult result = MessageBox.Show(warrnigText, "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
 
+                if (result == DialogResult.OK)
+                {
+                    bludaFromDB.DeleteBludo(removeBludo);
+                    dataGridView1.DataSource = bludaFromDB.LoadBludos();
+                }
+            }
+            else
+                MessageBox.Show("Строка не выделена!");
+            listBox1.Items.Clear();
+            label1.Text = "";
+            textBox1.Clear();
+        }
+
+        private void добавитьБлюдоToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddBludaForm addBludaForm = new AddBludaForm();
+            addBludaForm.ShowDialog();
+            dataGridView1.DataSource = bludaFromDB.LoadBludos();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+        }
+
+        private void рецептToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RecipeForm recipeForm = new RecipeForm(bludos, sostavBlud);
+            recipeForm.ShowDialog();
+        }
+
+        private void поискПоКритериямToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SearchBludForm search = new SearchBludForm();
+            search.ShowDialog();
         }
     }
 }

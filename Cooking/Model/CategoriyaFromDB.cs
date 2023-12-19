@@ -22,22 +22,19 @@ namespace Cooking.Model
                 string sqlExp = "SELECT category_id, category_name FROM public.category_bluda ORDER BY category_id";
                 NpgsqlCommand command = new NpgsqlCommand(sqlExp, connection);
                 NpgsqlDataReader reader = command.ExecuteReader();
-                if (reader.HasRows)
-                {
                     while (reader.Read())
                     {
                         categoriya.Add(new Categoriya((int)reader[0], reader[1].ToString()));
                     }
-                }
                 reader.Close();
                 return categoriya;
             }
             catch (NpgsqlException ex)
             {
                 MessageBox.Show(ex.Message);
-                return categoriya;
             }
-            finally { connection.Close(); }
+            connection.Close();
+            return categoriya;
         }
     }
 }
